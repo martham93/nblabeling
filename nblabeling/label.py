@@ -685,8 +685,8 @@ class LabelWidget(object):
         return self.buttons
 
 
-
 class Labelizer():
+
     def __init__(self, img_array_lst):
         """
           Labelizer will page through image/labels and allow users to remove/change data or labels from a VedaBase or VedaStream
@@ -719,36 +719,6 @@ class Labelizer():
             print("All tiles checked")
 
 
-
-
-
-
-    # def _create_images(self):
-    #     """
-    #     Creates image tiles from a datapoint
-    #     returns:
-    #         img: An image tile of size (M,N,3)
-    #     """
-    #     if isinstance(self.vedaset, veda.api.VedaCollectionProxy):
-    #         img = self.datapoint.image
-    #     elif isinstance(self.vedaset, (stream.vedastream.BufferedSampleArray,
-    #                   store.vedabase.H5SampleArray)):
-    #         img = np.moveaxis(self.datapoint[0], 0, -1)
-    #     return img
-
-    # def _create_labels(self):
-    #     """
-    #     Generates labels for a datapoint's image tile
-    #     returns:
-    #         labels: a list of labels for an image tile
-    #     """
-    #     if isinstance(self.vedaset, veda.api.VedaCollectionProxy):
-    #         labels = self.datapoint.label.values()
-    #     elif isinstance(self.vedaset, (stream.vedastream.BufferedSampleArray,
-    #                   store.vedabase.H5SampleArray)):
-    #         labels = self.datapoint[1]
-    #     return labels
-
     def _create_buttons(self):
         """
         Creates ipywidget widget buttons
@@ -777,22 +747,10 @@ class Labelizer():
             self.index = self.count
         self.clean()
 
-
-
-    # def _recolor_images(self):
-    #     img = self.image.astype('float32')
-    #     img[:,:,0] /= np.max(img[:,:,0])
-    #     img[:,:,1] /= np.max(img[:,:,1])
-    #     img[:,:,2] /= np.max(img[:,:,2])
-    #     return(img)
-
     def _display_image(self):
         """
-        Displays image tile for a given vedaset object.
+        Displays image tile.
         """
-        # if self.image.dtype == 'uint16':
-        #     img = self._recolor_images()
-        # else:
         img = self.datapoint
         plt.figure(figsize=(10, 10))
         self.ax = plt.subplot()
@@ -803,7 +761,7 @@ class Labelizer():
 
     def _display_classification(self, title=True):
         """
-        Adds vedaset classification labels to the image plot.
+        Displays tiles for imagery binary image similarity.
         """
         if title:
             plt.title('Does this tile contains matching imagery', fontsize=14)
@@ -812,10 +770,10 @@ class Labelizer():
 
     def clean(self):
         """
-        Method for verifying each vedaset object as image data with associated polygons.
-        Displays a polygon overlayed on image chip with associated ipywidget
-        buttons. Allows user to click through each vedaset object and decide
-        whether to keep or remove the object.
+        Method for verifying image similarity as returned by aritifico.
+        Displays an image chip with associated ipywidget
+        buttons to compare to original test image. Allows user to click through each image at verify
+        numpary array information will be stored in two lists (either correct or incorrect tiles).
         """
         clear_output()
         buttons = self._create_buttons()
@@ -827,14 +785,5 @@ class Labelizer():
             display(HBox(buttons))
             self._display_image()
             self._display_classification()
-
         else:
             print('All Tiles labeled')
-            # try:
-            #     print("You've flagged %0.f bad tiles. Review them now" % len(self.flagged_tiles))
-            #     self.iflagged_tiles = iter(self.flagged_tiles)
-            #     # self.image = self._create_images()
-            #     # self.labels = self._create_labels()
-            #     #self.clean_flags()
-            # except IndexError:
-            #     print("All tiles have been cleaned.")
