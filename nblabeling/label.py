@@ -712,7 +712,8 @@ class Labelizer():
             self.index +=1
         else:
             self.index = 0
-        self.datapoint = self.img_array_list[self.index] ###get next item in index
+        if self.index <= len(self.img_array_list):
+             self.datapoint = self.img_array_list[self.index] ###get next item in index
 
 
 
