@@ -704,12 +704,14 @@ class Labelizer():
         self.count = len(img_array_lst)
         self.index = None
         self.flagged_tiles = []
-        self.iflagged_tiles = []
+        self.correct_tiles = []
         self._get_next()  #create images, labels, and datapoint
 
     def _get_next(self):
         if self.index is not None:
             self.index +=1
+        if self.index >= self.count:
+            print('all tiles labeled')
         else:
             self.index = 0
         self.datapoint = self.img_array_list[self.index] ###get next item in index
@@ -761,6 +763,7 @@ class Labelizer():
         Callback and handling of widget buttons.
         """
         if b.description == 'Yes':
+            self.correct_tiles.append(self.datapoint)
             self._get_next()
         elif b.description == 'No':
             self.flagged_tiles.append(self.datapoint)
@@ -786,7 +789,7 @@ class Labelizer():
         #     img = self._recolor_images()
         # else:
         img = self.datapoint
-        plt.figure(figsize = (10, 10))
+        plt.figure(figsize=(10, 10))
         self.ax = plt.subplot()
         self.ax.axis("off")
         self.ax.imshow(img)
@@ -821,11 +824,12 @@ class Labelizer():
             self._display_classification()
 
         else:
-            try:
-                print("You've flagged %0.f bad tiles. Review them now" % len(self.flagged_tiles))
-                self.iflagged_tiles = iter(self.flagged_tiles)
-                self.image = self._create_images()
-                self.labels = self._create_labels()
-                self.clean_flags()
-            except StopIteration:
-                print("All tiles have been cleaned.")
+            print('All Tiles labeled')
+            # try:
+            #     print("You've flagged %0.f bad tiles. Review them now" % len(self.flagged_tiles))
+            #     self.iflagged_tiles = iter(self.flagged_tiles)
+            #     # self.image = self._create_images()
+            #     # self.labels = self._create_labels()
+            #     #self.clean_flags()
+            # except IndexError:
+            #     print("All tiles have been cleaned.")
