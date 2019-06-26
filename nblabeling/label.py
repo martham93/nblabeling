@@ -712,8 +712,14 @@ class Labelizer():
             self.index +=1
         else:
             self.index = 0
-        if self.index <= len(self.img_array_list):
-             self.datapoint = self.img_array_list[self.index] ###get next item in index
+
+        try:
+            self.datapoint = self.img_array_list[self.index]
+        except IndexError:
+            print("All tiles checked")
+
+
+
 
 
 
