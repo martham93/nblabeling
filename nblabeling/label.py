@@ -702,8 +702,6 @@ class Labelizer():
 
         self.img_array_list = img_array_lst
         self.count = len(img_array_lst)
-
-
         self.index = None
         self.flagged_tiles = []
         self.iflagged_tiles = []
@@ -715,6 +713,7 @@ class Labelizer():
         else:
             self.index = 0
         self.datapoint = self.img_array_list[self.index] ###get next item in index
+
 
 
     # def _create_images(self):
@@ -772,21 +771,21 @@ class Labelizer():
 
 
 
-    def _recolor_images(self):
-        img = self.image.astype('float32')
-        img[:,:,0] /= np.max(img[:,:,0])
-        img[:,:,1] /= np.max(img[:,:,1])
-        img[:,:,2] /= np.max(img[:,:,2])
-        return(img)
+    # def _recolor_images(self):
+    #     img = self.image.astype('float32')
+    #     img[:,:,0] /= np.max(img[:,:,0])
+    #     img[:,:,1] /= np.max(img[:,:,1])
+    #     img[:,:,2] /= np.max(img[:,:,2])
+    #     return(img)
 
     def _display_image(self):
         """
         Displays image tile for a given vedaset object.
         """
-        if self.image.dtype == 'uint16':
-            img = self._recolor_images()
-        else:
-            img = self.image
+        # if self.image.dtype == 'uint16':
+        #     img = self._recolor_images()
+        # else:
+        img = self.datapoint
         plt.figure(figsize = (10, 10))
         self.ax = plt.subplot()
         self.ax.axis("off")
@@ -814,7 +813,7 @@ class Labelizer():
         buttons = self._create_buttons()
         for b in buttons:
             b.on_click(self._handle_buttons)
-        if self.image is not None and self.index != self.count:
+        if self.index != self.count:
             print("%0.f tiles out of %0.f tiles have been cleaned" %
                   (self.index, self.count))
             display(HBox(buttons))

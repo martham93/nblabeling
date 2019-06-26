@@ -48,14 +48,13 @@ class Labelizer():
         self.iflagged_tiles = []
         self._get_next()  #create images, labels, and datapoint
 
-
     def _get_next(self):
         if self.index is not None:
             self.index +=1
         else:
             self.index = 0
         self.datapoint = self.img_array_list[self.index] ###get next item in index
-        
+
 
     # def _create_images(self):
     #     """
