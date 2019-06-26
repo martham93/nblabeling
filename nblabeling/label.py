@@ -710,8 +710,6 @@ class Labelizer():
     def _get_next(self):
         if self.index is not None:
             self.index +=1
-        if self.index >= self.count:
-            print('all tiles labeled')
         else:
             self.index = 0
         self.datapoint = self.img_array_list[self.index] ###get next item in index
