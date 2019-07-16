@@ -687,7 +687,7 @@ class LabelWidget(object):
 
 class Labelizer():
 
-    def __init__(self, img_array_lst):
+    def __init__(self, img_array_lst, f_name_list):
         """
           Labelizer will page through image/labels and allow users to remove/change data or labels from a VedaBase or VedaStream
           Params:
@@ -701,10 +701,13 @@ class Labelizer():
         assert has_plt, 'Labelizer requires matplotlib to be installed'
 
         self.img_array_list = img_array_lst
+        self.f_name_list = f_name_list
         self.count = len(img_array_lst)
         self.index = None
         self.flagged_tiles = []
+        self.negative_tiles = []
         self.correct_tiles = []
+        self.positive_tiles = []
         self._get_next()  #create images, labels, and datapoint
 
     def _get_next(self):
@@ -739,9 +742,11 @@ class Labelizer():
         """
         if b.description == 'Yes':
             self.correct_tiles.append(self.datapoint)
+            self.positive_tiles.append(self.f_name_list[self.index])
             self._get_next()
         elif b.description == 'No':
             self.flagged_tiles.append(self.datapoint)
+            self.negative_tiles.append(self.f_name_list[self.index])
             self._get_next()
         elif b.description == 'Exit':
             self.index = self.count
