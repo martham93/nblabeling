@@ -1,9 +1,0 @@
-matplotlib
-shapely
-gbdxtools
-numpy
-scikit-image
-rasterio
-ipywidgets
-IPython
-pandas
